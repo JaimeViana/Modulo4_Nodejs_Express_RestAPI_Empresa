@@ -1,0 +1,65 @@
+### EMPLEADOS ###
+
+GET http://localhost:3000/api/empleados
+
+###
+
+POST http://localhost:3000/api/empleados
+Content-Type: application/json
+
+{
+    "nombre": "Manolo",
+    "dni": "00988217-H",
+    "sexo": "M",
+    "fecha_nac": "1996-02-27",
+    "salario": 700,
+    "cargo": "becario"
+}
+
+###
+
+PUT http://localhost:3000/api/empleados
+Content-Type: application/json
+
+{
+    "id": 11,
+    "nombre": "Raúl",
+    "dni": "03807090S",
+    "sexo": "M",
+    "fecha_nac": "1983-05-23",
+    "salario": 3500,
+    "cargo": "ayudante de dirección"
+}
+
+###
+
+DELETE http://localhost:3000/api/empleados
+Content-Type: application/json
+
+{
+    "id": 10
+}
+
+### DEPARTAMENTOS ###
+
+GET http://localhost:3000/api/departamentos
+
+###
+POST http://localhost:3000/api/departamentos
+Content-Type: application/json
+
+{
+    "nombre": "desarrollo",
+    "ciudad": "Granada"
+}
+
+###
+PUT http://localhost:3000/api/departamentos
+Content-Type: application/json
+
+{
+    "nombre": "marketing",
+    "ciudad": "Málaga",
+    "id": 5
+}
+
