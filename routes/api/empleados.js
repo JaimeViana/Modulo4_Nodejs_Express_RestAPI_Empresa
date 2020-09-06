@@ -12,16 +12,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-// FIXME: No se muestra el nuevo empleado en json junto con el mensaje 'Se ha insertado un nuevo empleado'. Aparece vacío el objeto.
 router.post('/', [
     check('nombre', 'El campo nombre es obligatorio').exists(),
     check('dni', 'El campo dni es obligatorio y el formato debe ser el adecuado').matches(/(^([0-9]{8,8}\-[A-Z])|^)$/),
-    // .custom(value => {
-    //     return getByDni(value).then(user => {
-    //         if (user) {
-    //             return Promise.reject('Ya existe un empleado con ete DNI en la base de datos');
-    //         })
-    // }),
     check('sexo', 'El campo sexo es obligatorio').exists(),
     check('fecha_nac', 'El campo fecha_nac es obligatorio').exists(),
     check('salario', 'El campo salario es obligatorio').exists(),
@@ -29,13 +22,14 @@ router.post('/', [
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.json(errors.array());
+        return res.status(400).json(errors.array());
     }
     try {
         req.body.fecha_inc = new Date();
         const result = await create(req.body);
         if (result['affectedRows'] === 1) {
-            const nuevoEmpleado = getById(result['insertId']);
+            const nuevoEmpleado = await getById(result['insertId']);
+            console.log(nuevoEmpleado);
             res.status(201).json({ success: 'Se ha insertado un nuevo empleado', empleado: nuevoEmpleado });
         } else {
             res.status(422).json({ error: 'No se ha podido insertar el empleado' });
